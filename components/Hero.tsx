@@ -1,23 +1,46 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface HeroProps {
-  image?: string;
+  images?: string[];
 }
 
-const Hero: React.FC<HeroProps> = ({ image }) => {
+const Hero: React.FC<HeroProps> = ({ images = [] }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000); // Troca a cada 5 segundos
+
+    return () => clearInterval(interval);
+  }, [images]);
+
   return (
     <section id="inicio" className="relative min-h-screen flex items-center pt-32 md:pt-48 lg:pt-64 pb-12 overflow-hidden">
+      {/* Background Slideshow */}
       <div className="absolute inset-0 z-0">
-        {image ? (
-          <img
-            src={image}
-            alt="Consultório Odontológico Moderno"
-            className="w-full h-full object-cover"
-          />
+        {images.length > 0 ? (
+          images.map((src, index) => (
+            <div
+              key={src}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                index === currentIndex ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <img
+                src={src}
+                alt={`Clínica Dente Saudável Ambiente ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))
         ) : (
           <div className="w-full h-full bg-slate-200 animate-pulse"></div>
         )}
+        {/* Overlay para contraste */}
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent"></div>
       </div>
 
