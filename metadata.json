@@ -1,0 +1,7 @@
+{
+  "name": "Clínica Dente Saudável",
+  "description": "Um site institucional moderno e profissional para a Clínica Dente Saudável, apresentando serviços odontológicos, estética e bem-estar com design elegante em tons de lilás e grená.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
