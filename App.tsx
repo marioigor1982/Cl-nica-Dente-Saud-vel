@@ -14,13 +14,12 @@ import { ImageMap, ServiceItem } from './types';
 
 const App: React.FC = () => {
   const [images, setImages] = useState<ImageMap>({
-    hero: '', // Não utilizado mais como string simples no componente Hero
-    draSabrina: 'https://i.postimg.cc/C5LXyKDx/1768799361732.png', // Foto real fornecida
-    aesthetics: 'https://i.postimg.cc/cCpM1TCG/photo-1670250492416-570b5b7343b1.jpg', // Foto real fornecida para Bem-estar
+    hero: '', 
+    draSabrina: 'https://i.postimg.cc/C5LXyKDx/1768799361732.png', 
+    aesthetics: 'https://i.postimg.cc/cCpM1TCG/photo-1670250492416-570b5b7343b1.jpg', 
     logo: ''
   });
 
-  // Imagens selecionadas para o Hero - agora com 7 fotos de alta qualidade
   const heroPhotos = [
     'https://i.postimg.cc/QChjLZk3/premium-photo-1663088767412-b10c8dc27ad1.jpg',
     'https://i.postimg.cc/QChjLZkN/photo-1629909613654-28e377c37b09.jpg',
@@ -33,7 +32,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const loadImages = async () => {
-      // Carregamento apenas do logotipo por IA
       const logoImg = await generateLogo();
       const logoUrl = logoImg || '';
 
@@ -42,7 +40,6 @@ const App: React.FC = () => {
         logo: logoUrl
       }));
 
-      // Atualiza o favicon na aba/guia do site
       if (logoUrl) {
         const favicon = document.getElementById('dynamic-favicon') as HTMLLinkElement;
         if (favicon) {
@@ -75,24 +72,9 @@ const App: React.FC = () => {
       <Hero images={heroPhotos} />
       <Gallery />
       <About image={images.draSabrina} />
-      
-      <ServicesGrid 
-        id="tratamentos" 
-        title="Tratamentos Odontológicos" 
-        subtitle="O que fazemos por você"
-        items={treatments} 
-        bgColor="bg-gray-50"
-      />
-
+      <ServicesGrid id="tratamentos" title="Tratamentos Odontológicos" subtitle="O que fazemos por você" items={treatments} bgColor="bg-gray-50" />
       <Aesthetics image={images.aesthetics} />
-
-      <ServicesGrid 
-        id="cirurgias" 
-        title="Cirurgias Dentárias" 
-        subtitle="Segurança e Precisão"
-        items={surgeries} 
-      />
-
+      <ServicesGrid id="cirurgias" title="Cirurgias Dentárias" subtitle="Segurança e Precisão" items={surgeries} />
       <Contact />
       <Footer logo={images.logo} />
       <WhatsAppButton />

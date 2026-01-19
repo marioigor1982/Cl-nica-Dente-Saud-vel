@@ -13,7 +13,7 @@ const Hero: React.FC<HeroProps> = ({ images = [] }) => {
 
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 6000); // 6 segundos por imagem
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [images]);
@@ -21,9 +21,8 @@ const Hero: React.FC<HeroProps> = ({ images = [] }) => {
   return (
     <section 
       id="inicio" 
-      className="relative min-h-screen flex items-center pt-40 md:pt-64 lg:pt-80 pb-20 overflow-hidden bg-black"
+      className="relative min-h-screen flex items-center pt-32 md:pt-60 lg:pt-80 pb-20 overflow-hidden bg-black"
     >
-      {/* Background Slideshow com Efeito Ken Burns Refinado */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {images.length > 0 ? (
           images.map((src, index) => (
@@ -34,14 +33,14 @@ const Hero: React.FC<HeroProps> = ({ images = [] }) => {
               }`}
               style={{ 
                 transitionProperty: 'opacity, transform',
-                transitionDuration: '1500ms, 12000ms', // Zoom ultra lento
+                transitionDuration: '1500ms, 12000ms',
                 imageRendering: 'high-quality'
               }}
             >
               <img
                 src={src}
                 alt={`Ambiente Clínica ${index + 1}`}
-                className="w-full h-full object-cover brightness-[0.85] contrast-[1.1]"
+                className="w-full h-full object-cover brightness-[0.8] contrast-[1.05]"
                 loading={index === 0 ? "eager" : "lazy"}
               />
             </div>
@@ -50,13 +49,12 @@ const Hero: React.FC<HeroProps> = ({ images = [] }) => {
           <div className="w-full h-full bg-slate-900 animate-pulse"></div>
         )}
         
-        {/* Overlays de Gradiente para Legibilidade e Estilo */}
         <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/60 to-transparent z-10"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-white/30 via-transparent to-transparent z-10"></div>
       </div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-20 max-w-7xl">
-        <div className="max-w-2xl md:mt-12 lg:mt-16">
+        <div className="max-w-2xl md:mt-8 lg:mt-12">
           <div className="inline-block px-4 py-1 rounded-full bg-[#B19CD9]/20 backdrop-blur-md border border-[#B19CD9]/30 mb-6">
             <span className="text-[#800000] font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase">
               Excelência em Odontologia
@@ -95,7 +93,6 @@ const Hero: React.FC<HeroProps> = ({ images = [] }) => {
             </a>
           </div>
 
-          {/* Indicadores de Slideshow discretos */}
           {images.length > 1 && (
             <div className="flex gap-3 mt-16">
               {images.map((_, idx) => (
