@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -20,6 +19,7 @@ const App: React.FC = () => {
     logo: ''
   });
 
+  // Lista consolidada de 7 fotos de alta qualidade para o carrossel
   const heroPhotos = [
     'https://i.postimg.cc/QChjLZk3/premium-photo-1663088767412-b10c8dc27ad1.jpg',
     'https://i.postimg.cc/QChjLZkN/photo-1629909613654-28e377c37b09.jpg',

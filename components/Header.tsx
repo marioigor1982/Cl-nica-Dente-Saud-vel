@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 interface HeaderProps {
@@ -29,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ logo }) => {
     <header className={`fixed top-0 w-full z-40 transition-all duration-500 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg py-2' : 'bg-transparent py-4 md:py-6'}`}>
       <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
         <div className="flex items-center gap-3 md:gap-6 group cursor-pointer flex-1 md:flex-none">
-          <div className={`transition-all duration-500 flex items-center justify-center overflow-hidden flex-shrink-0 ${isScrolled ? 'w-12 h-12 md:w-16 md:h-16' : 'w-16 h-16 md:w-32 md:h-32 lg:w-40 lg:h-40'}`}>
+          <div className={`transition-all duration-500 flex items-center justify-center overflow-hidden flex-shrink-0 ${isScrolled ? 'w-12 h-12 md:w-16 md:h-16' : 'w-16 h-16 md:w-28 md:h-28 lg:w-32 lg:h-32'}`}>
             {logo ? (
               <img 
                 src={logo} 
@@ -38,16 +37,16 @@ const Header: React.FC<HeaderProps> = ({ logo }) => {
               />
             ) : (
               <div className="w-full h-full bg-[#800000] rounded-xl flex items-center justify-center">
-                <span className={`text-white font-bold transition-all ${isScrolled ? 'text-sm' : 'text-xl md:text-3xl'}`}>CDS</span>
+                <span className={`text-white font-bold transition-all ${isScrolled ? 'text-sm' : 'text-xl md:text-2xl'}`}>CDS</span>
               </div>
             )}
           </div>
           <div className="flex flex-col min-w-0">
-            <span className={`font-serif font-bold tracking-tight transition-all duration-500 text-[#800000] truncate ${isScrolled ? 'text-lg md:text-2xl' : 'text-xl md:text-4xl lg:text-5xl'}`}>
+            <span className={`font-serif font-bold tracking-tight transition-all duration-500 text-[#800000] truncate ${isScrolled ? 'text-lg md:text-2xl' : 'text-xl md:text-3xl lg:text-4xl'}`}>
               Clínica Dente Saudável
             </span>
             {!isScrolled && (
-              <span className="text-[#B19CD9] text-[10px] md:text-sm lg:text-base font-bold tracking-[0.15em] md:tracking-[0.3em] uppercase mt-0 md:mt-2 animate-pulse whitespace-nowrap">
+              <span className="text-[#B19CD9] text-[10px] md:text-xs lg:text-sm font-bold tracking-[0.15em] md:tracking-[0.3em] uppercase mt-0 md:mt-1 animate-pulse whitespace-nowrap">
                 Dra. Sabrina C. Valverde
               </span>
             )}
@@ -72,7 +71,7 @@ const Header: React.FC<HeaderProps> = ({ logo }) => {
           </a>
         </nav>
         
-        {/* Mobile Call to Action Button - Visible when links are hidden */}
+        {/* Mobile Call to Action Button */}
         <div className="xl:hidden ml-2">
           <a
             href="#contato"
