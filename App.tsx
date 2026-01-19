@@ -9,47 +9,36 @@ import Aesthetics from './components/Aesthetics';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
-import { generateDentalImage, generateLogo } from './services/geminiService';
+import { generateLogo } from './services/geminiService';
 import { ImageMap, ServiceItem } from './types';
 
 const App: React.FC = () => {
   const [images, setImages] = useState<ImageMap>({
-    hero: '',
+    hero: '', // Não utilizado mais como string simples no componente Hero
     draSabrina: 'https://i.postimg.cc/C5LXyKDx/1768799361732.png', // Foto real fornecida
-    aesthetics: '',
+    aesthetics: 'https://i.postimg.cc/cCpM1TCG/photo-1670250492416-570b5b7343b1.jpg', // Foto real fornecida para Bem-estar
     logo: ''
   });
 
-  const clinicPhotos = [
-    "https://i.postimg.cc/bDC7bMBM/photo-1588776814546-1ffcf47267a5.jpg",
-    "https://i.postimg.cc/YLvJx35s/photo-1606811841689-23dfddce3e95.jpg",
-    "https://i.postimg.cc/0MWTm3Bh/photo-1629909613654-28e377c37b09.jpg",
-    "https://i.postimg.cc/hzykxw5C/photo-1643660527072-9c702932f606.jpg",
-    "https://i.postimg.cc/8JK2W30t/photo-1722407348833-35e0df48bf53.jpg",
-    "https://i.postimg.cc/R6skf8DT/photo-1734518352225-22a52666268c.jpg",
-    "https://i.postimg.cc/YGn5gVsn/premium-photo-1663088767412-b10c8dc27ad1.jpg",
-    "https://i.postimg.cc/8JK2W30m/premium-photo-1675686363422-7d7ab88ee530.jpg",
-    "https://i.postimg.cc/vgqJ9jN2/premium-photo-1675686363504-ba2df7786f16.jpg",
-    "https://i.postimg.cc/xJxwH74Z/premium-photo-1675686363507-22a8d0e11b4c.jpg",
-    "https://i.postimg.cc/DJj9sDMY/premium-photo-1675686363519-aa408ff068f4.jpg",
-    "https://i.postimg.cc/ZvW1LHkh/premium-photo-1681966962522-546f370bc98e.jpg",
-    "https://i.postimg.cc/njRy75Wf/premium-photo-1681967039743-37dc3a27f4ce.jpg",
-    "https://i.postimg.cc/sQ6kS8N9/premium-photo-1682145288913-979906a9ebc8.jpg"
+  // Imagens selecionadas para o Hero - agora com 7 fotos de alta qualidade
+  const heroPhotos = [
+    'https://i.postimg.cc/QChjLZk3/premium-photo-1663088767412-b10c8dc27ad1.jpg',
+    'https://i.postimg.cc/QChjLZkN/photo-1629909613654-28e377c37b09.jpg',
+    'https://i.postimg.cc/90Cc3Ht5/photo_1722407348833_35e0df48bf53.jpg',
+    'https://i.postimg.cc/Y0MtcBf7/premium_photo_1675686363504_ba2df7786f16.jpg',
+    'https://i.postimg.cc/Bbp447Mt/premium_photo_1681966962522_546f370bc98e.jpg',
+    'https://i.postimg.cc/rsMq62Cs/premium_photo_1681967039743_37dc3a27f4ce.jpg',
+    'https://i.postimg.cc/hvcKFRbS/photo_1588776814546_1ffcf47267a5.jpg'
   ];
 
   useEffect(() => {
     const loadImages = async () => {
-      // Carregamento das imagens de apoio e do logotipo
-      const [aestheticImg, logoImg] = await Promise.all([
-        generateDentalImage("High-end aesthetic dentistry results, beautiful healthy white smile, close up, professional lighting"),
-        generateLogo()
-      ]);
-
+      // Carregamento apenas do logotipo por IA
+      const logoImg = await generateLogo();
       const logoUrl = logoImg || '';
 
       setImages(prev => ({
         ...prev,
-        aesthetics: aestheticImg || 'https://picsum.photos/1200/800?grayscale',
         logo: logoUrl
       }));
 
@@ -74,7 +63,7 @@ const App: React.FC = () => {
   ];
 
   const surgeries: ServiceItem[] = [
-    { title: "Extração de Sisos", icon: "🏥", description: "Procedimentos seguros e rápidos para remoção de dentes do siso." },
+    { title: "Extração de Sisos", icon: "🏥", description: "Procedimentos seguros e rápidos para remover dentes do siso." },
     { title: "Cirurgias Periodontais", icon: "💉", description: "Tratamentos cirúrgicos para a saúde e estética da sua gengiva." },
     { title: "Implantes", icon: "🏗️", description: "Cirurgias de alta precisão para reabilitação oral completa." },
     { title: "Cirurgias Corretivas", icon: "🛠️", description: "Correções estruturais para melhor funcionalidade da face." },
@@ -83,7 +72,7 @@ const App: React.FC = () => {
   return (
     <main className="antialiased">
       <Header logo={images.logo} />
-      <Hero images={clinicPhotos} />
+      <Hero images={heroPhotos} />
       <Gallery />
       <About image={images.draSabrina} />
       

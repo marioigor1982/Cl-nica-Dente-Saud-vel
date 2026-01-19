@@ -13,60 +13,103 @@ const Hero: React.FC<HeroProps> = ({ images = [] }) => {
 
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); // Troca a cada 5 segundos
+    }, 6000); // 6 segundos por imagem
 
     return () => clearInterval(interval);
   }, [images]);
 
   return (
-    <section id="inicio" className="relative min-h-screen flex items-center pt-32 md:pt-48 lg:pt-64 pb-12 overflow-hidden">
-      {/* Background Slideshow */}
-      <div className="absolute inset-0 z-0">
+    <section 
+      id="inicio" 
+      className="relative min-h-screen flex items-center pt-40 md:pt-64 lg:pt-80 pb-20 overflow-hidden bg-black"
+    >
+      {/* Background Slideshow com Efeito Ken Burns Refinado */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         {images.length > 0 ? (
           images.map((src, index) => (
             <div
               key={src}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === currentIndex ? 'opacity-100' : 'opacity-0'
+              className={`absolute inset-0 transition-opacity duration-[1500ms] ease-in-out ${
+                index === currentIndex ? 'opacity-100 scale-110' : 'opacity-0 scale-100'
               }`}
+              style={{ 
+                transitionProperty: 'opacity, transform',
+                transitionDuration: '1500ms, 12000ms', // Zoom ultra lento
+                imageRendering: 'high-quality'
+              }}
             >
               <img
                 src={src}
-                alt={`Clínica Dente Saudável Ambiente ${index + 1}`}
-                className="w-full h-full object-cover"
+                alt={`Ambiente Clínica ${index + 1}`}
+                className="w-full h-full object-cover brightness-[0.85] contrast-[1.1]"
+                loading={index === 0 ? "eager" : "lazy"}
               />
             </div>
           ))
         ) : (
-          <div className="w-full h-full bg-slate-200 animate-pulse"></div>
+          <div className="w-full h-full bg-slate-900 animate-pulse"></div>
         )}
-        {/* Overlay para contraste */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent"></div>
+        
+        {/* Overlays de Gradiente para Legibilidade e Estilo */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/60 to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-white/30 via-transparent to-transparent z-10"></div>
       </div>
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-5xl">
-        <div className="bg-white/40 backdrop-blur-md p-6 md:p-10 rounded-3xl border border-white/50 shadow-2xl max-w-2xl">
-          <span className="text-[#800000] font-bold tracking-widest text-xs md:text-sm uppercase mb-3 md:mb-4 block">Bem-vindo à excelência</span>
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-serif text-[#800000] leading-tight mb-4 md:mb-6">
-            Onde o seu <span className="text-[#B19CD9]">sorriso</span> é a nossa prioridade.
+      <div className="container mx-auto px-4 md:px-6 relative z-20 max-w-7xl">
+        <div className="max-w-2xl md:mt-12 lg:mt-16">
+          <div className="inline-block px-4 py-1 rounded-full bg-[#B19CD9]/20 backdrop-blur-md border border-[#B19CD9]/30 mb-6">
+            <span className="text-[#800000] font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase">
+              Excelência em Odontologia
+            </span>
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-serif text-[#800000] leading-[1.1] mb-8 drop-shadow-sm">
+            Seu sorriso é a nossa <br />
+            <span className="text-[#B19CD9] italic relative">
+              melhor obra.
+              <svg className="absolute -bottom-2 left-0 w-full h-2 text-[#B19CD9]/40" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <path d="M0 5 Q 25 0 50 5 T 100 5" fill="none" stroke="currentColor" strokeWidth="2" />
+              </svg>
+            </span>
           </h1>
-          <p className="text-base md:text-lg lg:text-xl text-gray-700 mb-6 md:mb-8 max-w-xl leading-relaxed">
-            Na Clínica Dente Saudável, combinamos tecnologia de ponta com um atendimento humanizado para transformar sua saúde bucal e elevar sua autoestima.
+          
+          <p className="text-lg md:text-2xl text-gray-800 mb-10 max-w-xl leading-relaxed font-medium">
+            Atendimento exclusivo com a <span className="text-[#800000] font-bold">Dra. Sabrina C. Valverde</span>. 
+            Sinta-se em casa em um ambiente projetado para o seu conforto.
           </p>
-          <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-            <a
-              href="#tratamentos"
-              className="bg-[#800000] text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:bg-[#600000] transition-all text-center text-sm md:text-base"
-            >
-              Nossos Tratamentos
-            </a>
+          
+          <div className="flex flex-col sm:flex-row gap-5">
             <a
               href="#contato"
-              className="bg-white text-[#800000] border-2 border-[#800000] px-6 md:px-8 py-3 md:py-4 rounded-full font-bold hover:bg-[#f8f8f8] transition-all text-center text-sm md:text-base"
+              className="group relative overflow-hidden bg-[#800000] text-white px-10 py-5 rounded-2xl font-bold shadow-2xl transition-all hover:scale-105 active:scale-95 text-center"
             >
-              Falar Conosco
+              <span className="relative z-10">AGENDAR AVALIAÇÃO</span>
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            </a>
+            
+            <a
+              href="#quem-somos"
+              className="backdrop-blur-md bg-white/50 border-2 border-[#800000]/20 text-[#800000] px-10 py-5 rounded-2xl font-bold hover:bg-white/80 transition-all text-center"
+            >
+              CONHEÇA A CLÍNICA
             </a>
           </div>
+
+          {/* Indicadores de Slideshow discretos */}
+          {images.length > 1 && (
+            <div className="flex gap-3 mt-16">
+              {images.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`h-1.5 transition-all duration-500 rounded-full ${
+                    idx === currentIndex ? 'w-12 bg-[#800000]' : 'w-4 bg-[#800000]/20 hover:bg-[#800000]/40'
+                  }`}
+                  aria-label={`Ir para slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
