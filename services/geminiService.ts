@@ -3,9 +3,31 @@ import { GoogleGenAI } from "@google/genai";
 
 const API_KEY = process.env.API_KEY;
 
-export const generateDentalImage = async (prompt: string): Promise<string | null> => {
+// Função auxiliar para cachear imagens e evitar chamadas excessivas à API
+const getCachedImage = (key: string): string | null => {
   try {
-    const ai = new GoogleGenAI({ apiKey: API_KEY! });
+    return localStorage.getItem(`cache_img_${key}`);
+  } catch (e) {
+    return null;
+  }
+};
+
+const setCachedImage = (key: string, data: string) => {
+  try {
+    localStorage.setItem(`cache_img_${key}`, data);
+  } catch (e) {
+    // Silencioso se o storage estiver cheio
+  }
+};
+
+export const generateDentalImage = async (prompt: string): Promise<string | null> => {
+  const cacheKey = btoa(prompt).substring(0, 16);
+  const cached = getCachedImage(cacheKey);
+  if (cached) return cached;
+
+  try {
+    if (!API_KEY) throw new Error("API Key not found");
+    const ai = new GoogleGenAI({ apiKey: API_KEY });
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
@@ -24,19 +46,26 @@ export const generateDentalImage = async (prompt: string): Promise<string | null
 
     for (const part of response.candidates?.[0]?.content?.parts || []) {
       if (part.inlineData) {
-        return `data:image/png;base64,${part.inlineData.data}`;
+        const base64 = `data:image/png;base64,${part.inlineData.data}`;
+        setCachedImage(cacheKey, base64);
+        return base64;
       }
     }
     return null;
-  } catch (error) {
-    console.error("Error generating image:", error);
+  } catch (error: any) {
+    console.error("Error generating image:", error?.message || error);
     return null;
   }
 };
 
 export const generateLogo = async (): Promise<string | null> => {
+  const cacheKey = "clinic_logo_main";
+  const cached = getCachedImage(cacheKey);
+  if (cached) return cached;
+
   try {
-    const ai = new GoogleGenAI({ apiKey: API_KEY! });
+    if (!API_KEY) throw new Error("API Key not found");
+    const ai = new GoogleGenAI({ apiKey: API_KEY });
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
@@ -55,12 +84,15 @@ export const generateLogo = async (): Promise<string | null> => {
 
     for (const part of response.candidates?.[0]?.content?.parts || []) {
       if (part.inlineData) {
-        return `data:image/png;base64,${part.inlineData.data}`;
+        const base64 = `data:image/png;base64,${part.inlineData.data}`;
+        setCachedImage(cacheKey, base64);
+        return base64;
       }
     }
     return null;
-  } catch (error) {
-    console.error("Error generating logo:", error);
+  } catch (error: any) {
+    // Se for erro de cota, o App.tsx já tem fallback para texto, então apenas logamos.
+    console.warn("Logo generation skipped (Quota or API error):", error?.message || error);
     return null;
   }
 };

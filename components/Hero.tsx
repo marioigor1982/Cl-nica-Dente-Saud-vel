@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 
 interface HeroProps {
@@ -20,7 +21,7 @@ const Hero: React.FC<HeroProps> = ({ images = [] }) => {
   return (
     <section 
       id="inicio" 
-      className="relative min-h-screen flex items-start lg:items-center pt-52 md:pt-64 lg:pt-80 pb-20 overflow-hidden bg-black"
+      className="relative min-h-screen flex items-start lg:items-center pt-52 md:pt-64 lg:pt-[22rem] pb-20 overflow-hidden bg-black"
     >
       {/* Background Slideshow com Efeito Ken Burns Refinado */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -55,7 +56,7 @@ const Hero: React.FC<HeroProps> = ({ images = [] }) => {
       </div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-20 max-w-7xl">
-        <div className="max-w-2xl mt-4 md:mt-8 lg:mt-16">
+        <div className="max-w-2xl mt-4 md:mt-8 lg:mt-0"> {/* Removido margin top excessivo no desktop pois o pt já resolve */}
           <div className="inline-block px-4 py-1 rounded-full bg-[#B19CD9]/20 backdrop-blur-md border border-[#B19CD9]/30 mb-6">
             <span className="text-[#800000] font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase">
               Excelência em Odontologia

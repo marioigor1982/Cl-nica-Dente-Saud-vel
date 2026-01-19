@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -32,15 +33,14 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const loadImages = async () => {
-      const logoImg = await generateLogo();
-      const logoUrl = logoImg || '';
-
-      setImages(prev => ({
-        ...prev,
-        logo: logoUrl
-      }));
+      const logoUrl = await generateLogo();
 
       if (logoUrl) {
+        setImages(prev => ({
+          ...prev,
+          logo: logoUrl
+        }));
+        
         const favicon = document.getElementById('dynamic-favicon') as HTMLLinkElement;
         if (favicon) {
           favicon.href = logoUrl;
