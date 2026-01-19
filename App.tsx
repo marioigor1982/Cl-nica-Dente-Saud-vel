@@ -29,12 +29,22 @@ const App: React.FC = () => {
         generateLogo()
       ]);
 
+      const logoUrl = logoImg || '';
+
       setImages({
         hero: heroImg || 'https://picsum.photos/1600/900?grayscale',
         draSabrina: sabrinaImg || 'https://picsum.photos/800/1000?grayscale',
         aesthetics: aestheticImg || 'https://picsum.photos/1200/800?grayscale',
-        logo: logoImg || ''
+        logo: logoUrl
       });
+
+      // Atualiza o favicon na aba/guia do site
+      if (logoUrl) {
+        const favicon = document.getElementById('dynamic-favicon') as HTMLLinkElement;
+        if (favicon) {
+          favicon.href = logoUrl;
+        }
+      }
     };
 
     loadImages();
